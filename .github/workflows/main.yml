@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  karanDeploy:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: git library
@@ -17,12 +17,12 @@ jobs:
         with:
           host: ${{secrets.IP}}
           username: ${{secrets.USERNAME}}
-          password: ${{secrets.PASSWORD}}
+          key: ${{secrets.PEM_KEY}}
 
           script: |
-            cd /home/karan/Backendcycle/
+            cd /home/ubuntu/6weeks_Diksha_MEAN_backend
             git pull origin main
-            npm i
-            pm2 delete "backend"
-            pm2 start index.js --name "backend"
+            sudo npm i
+            pm2 restart backend || pm2 start index.js --name "backend"
+            pm2 save
             
